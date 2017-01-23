@@ -11,11 +11,12 @@ FROM httpd:2.4
 
 MAINTAINER Steffo Weber <steffo.weber@gmail.com>
 RUN apt-get update && \
-  apt-get install -y default-jre && \
+  apt-get install -y default-jre telnet && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 ADD web_agents /opt
 ADD agent.conf /opt
+ADD vhosts.conf /usr/local/apache2/conf/
 
 ARG SERVERNAME=localhost
 ENV SERVERNAME=$SERVERNAME
@@ -33,6 +34,7 @@ RUN sed -i '/LoadModule proxy/s/^#//g' /usr/local/apache2/conf/httpd.conf && \
     sed -i "s/^#ServerName www.example.com:80/ServerName $SERVERNAME/"  /usr/local/apache2/conf/httpd.conf && \
     echo "IncludeOptional conf/vhosts.conf" >> /usr/local/apache2/conf/httpd.conf
 
+EXPOSE 80
 
 CMD echo $AGENT_PASSWORD > /opt/pwd && \
     sed -i "s@http:\/\/sso.example.com\:8080\/openam@$AM_SERVER_URL@" /opt/agent.conf && \
