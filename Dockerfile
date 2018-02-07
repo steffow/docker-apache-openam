@@ -1,5 +1,8 @@
 FROM httpd:2.4
 
+
+# curl -s -j -k -L -H "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u111-b14/jdk-8u111-linux-x64.tar.gz -o jdk.tgz
+
 #
 # docker build --build-arg SERVERNAME=myhost -t apache-agent .
 # docker run  --add-host=shiva.init8.net:192.168.178.33 \
